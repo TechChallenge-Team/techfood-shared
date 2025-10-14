@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <clear />
+    <!-- NuGet oficial -->
+    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
+    
+    <!-- GitHub Packages do TechChallenge-Team -->
+    <add key="github" value="https://nuget.pkg.github.com/TechChallenge-Team/index.json" />
+  </packageSources>
+  
+  <packageSourceCredentials>
+    <github>
+      <!-- 
+        ATENÇÃO: Não commite este arquivo com suas credenciais reais!
+        Use variáveis de ambiente ou arquivo local não versionado.
+        
+        Para gerar um token:
+        1. Acesse: https://github.com/settings/tokens
+        2. "Generate new token (classic)"
+        3. Selecione o escopo: read:packages
+        4. Copie o token gerado e substitua abaixo
+      -->
+      <add key="Username" value="SEU_USUARIO_GITHUB" />
+      <add key="ClearTextPassword" value="SEU_GITHUB_TOKEN" />
+    </github>
+  </packageSourceCredentials>
+  
+  <!-- Configurações de cache e comportamento -->
+  <config>
+    <add key="globalPackagesFolder" value="packages" />
+  </config>
+</configuration>

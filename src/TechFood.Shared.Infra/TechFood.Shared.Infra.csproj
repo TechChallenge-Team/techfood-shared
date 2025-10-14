@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8</TargetFramework>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Properties -->
+    <PackageId>TechFood.Shared.Infra</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>TechChallenge-Team</Authors>
+    <Company>TechChallenge</Company>
+    <Description>TechFood Shared Infrastructure - Persistência, consistência eventual e extensões de infraestrutura compartilhadas</Description>
+    <PackageTags>techfood;infrastructure;entityframework;shared</PackageTags>
+    <RepositoryUrl>https://github.com/TechChallenge-Team/techfood-shared</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <!--<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.3" />-->
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\TechFood.Shared.Application\TechFood.Shared.Application.csproj" />
+    <ProjectReference Include="..\TechFood.Shared.Domain\TechFood.Shared.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

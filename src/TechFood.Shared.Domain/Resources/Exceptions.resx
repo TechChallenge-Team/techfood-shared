@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Product_ThrowDescriptionIsEmpty" xml:space="preserve">
+    <value>The product description cannot be empty</value>
+  </data>
+  <data name="Product_ThrowNameIsEmpty" xml:space="preserve">
+    <value>The Name cannot empty </value>
+  </data>
+  <data name="Product_ThrowCategoryIdInvalid" xml:space="preserve">
+    <value>The product CategoryId is not valid</value>
+  </data>
+  <data name="Order_AmountIsNotEqualOrderAmount" xml:space="preserve">
+    <value>Payment amount is not equal to the order total amount.</value>
+  </data>
+  <data name="Order_CannotAddItemToNonPendingStatus" xml:space="preserve">
+    <value>Cannot add items to an order that is not in the Pending status.</value>
+  </data>
+  <data name="Order_CannotApplyDiscountToNonPendingStatus" xml:space="preserve">
+    <value>Cannot apply discount to an order that is not in the Pending status.</value>
+  </data>
+  <data name="Order_CannotRemoveItemToNonPendingStatus" xml:space="preserve">
+    <value>Cannot remove items from an order that is not in the Pending status.</value>
+  </data>
+  <data name="Order_DiscountCannotBeNegative" xml:space="preserve">
+    <value>Discount cannot be negative.</value>
+  </data>
+  <data name="Order_ItemNotFound" xml:space="preserve">
+    <value>Order item not found.</value>
+  </data>
+  <data name="Order_PaymentIsNull" xml:space="preserve">
+    <value>Payment cannot be null.</value>
+  </data>
+  <data name="Payment_AlreadyPaid" xml:space="preserve">
+    <value>Payment has already been paid.</value>
+  </data>
+  <data name="Product_ThrowCategoryImageFileIsEmpty" xml:space="preserve">
+    <value>The category image file cannot be empty</value>
+  </data>
+  <data name="Product_ThrowPriceIsGreaterThanZero" xml:space="preserve">
+    <value>The product price cannot be empty</value>
+  </data>
+  <data name="OrderItem_ThrowUnitPriceGreaterThanZero" xml:space="preserve">
+    <value>The orderItem UnitPrice have be greater than zero</value>
+  </data>
+  <data name="OrderItem_ThrowQuantityGreaterThanZero" xml:space="preserve">
+    <value>The OrdemItem quantity have be greater than zero</value>
+  </data>
+  <data name="OrderItem_ThrowProductIdIsInvalid" xml:space="preserve">
+    <value>The ProductId is not valid</value>
+  </data>
+  <data name="Category_ThrowNameIsEmpty" xml:space="preserve">
+    <value>The category name cannot be empty</value>
+  </data>
+  <data name="Category_ThrowFileImageIsEmpty" xml:space="preserve">
+    <value>The category file image cannot be empty</value>
+  </data>
+  <data name="Customer_ThrowDocumentCPFInvalid" xml:space="preserve">
+    <value>The Document CPF is invalid</value>
+  </data>
+  <data name="Category_ThrowIndexIsLessThanZero" xml:space="preserve">
+    <value>Category order must be greater than or equal to 0.</value>
+  </data>
+  <data name="User_PasswordHashIsEmpty" xml:space="preserve">
+    <value>The password hash cannot be empty</value>
+  </data>
+  <data name="User_RoleIsEmpty" xml:space="preserve">
+    <value>The role name cannot be empty</value>
+  </data>
+  <data name="Customer_ThrowEmailInvalid" xml:space="preserve">
+    <value>Email Invalid</value>
+  </data>
+  <data name="Preparation_CanOnlyCompleteIfInProgress" xml:space="preserve">
+    <value>Preparation can only be complete if it is in progress.</value>
+  </data>
+  <data name="Preparation_CanOnlyStartIfInPending" xml:space="preserve">
+    <value>Preparation can only be started if it is pending.</value>
+  </data>
+  <data name="Preparation_CanOnlyDeliverIfCompleted" xml:space="preserve">
+    <value>Preparation can only be deliver if it is completed.</value>
+  </data>
+  <data name="Preparation_AlreadyCancelled" xml:space="preserve">
+    <value>Preparation is already cancelled.</value>
+  </data>
+  <data name="Order_CannotDeliverToNonReadyStatus" xml:space="preserve">
+    <value>Cannot deliver an order that is not in the Ready status.</value>
+  </data>
+  <data name="Order_CannotPrepareToNonReceivedStatus" xml:space="preserve">
+    <value>Cannot prepare an order that is not in the Received status.</value>
+  </data>
+  <data name="Order_CannotReadyToNonInPreparationStatus" xml:space="preserve">
+    <value>Cannot ready an order that is not in the InPreparation status.</value>
+  </data>
+  <data name="Order_CannotReceiveToNonPendingStatus" xml:space="preserve">
+    <value>Cannot receive an order that is not in the Pending status.</value>
+  </data>
+</root>

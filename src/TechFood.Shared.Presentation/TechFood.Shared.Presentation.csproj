@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Properties -->
+    <PackageId>TechFood.Shared.Presentation</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>TechChallenge-Team</Authors>
+    <Company>TechChallenge</Company>
+    <Description>TechFood Shared Presentation - Extensões, filtros e configurações para camada de apresentação compartilhadas</Description>
+    <PackageTags>techfood;presentation;aspnetcore;shared;swagger</PackageTags>
+    <RepositoryUrl>https://github.com/TechChallenge-Team/techfood-shared</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Macross.Json.Extensions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.6.24" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0" /> 
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TechFood.Shared.Application\TechFood.Shared.Application.csproj" />
+    <ProjectReference Include="..\TechFood.Shared.Domain\TechFood.Shared.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
