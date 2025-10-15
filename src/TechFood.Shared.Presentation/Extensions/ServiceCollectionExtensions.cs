@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddSharedPresentation(this IServiceCollection services, IConfiguration configuration, PresentationOptions? options = null)
+    public static IServiceCollection AddPresentation(this IServiceCollection services, IConfiguration configuration, PresentationOptions? options = null)
     {
         options ??= new PresentationOptions();
 
