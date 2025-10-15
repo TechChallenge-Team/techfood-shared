@@ -6,7 +6,7 @@ namespace TechFood.Shared.Infra.Extensions;
 
 public class InfraOptions
 {
-    public Action<DbContextOptionsBuilder>? DbContext { get; set; }
+    public Action<IServiceProvider, DbContextOptionsBuilder>? DbContext { get; set; }
 
     public Assembly? AssemblyLoad { get; set; }
 }
