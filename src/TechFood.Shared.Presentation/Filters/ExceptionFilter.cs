@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TechFood.Shared.Domain.Exceptions;
 
 namespace TechFood.Shared.Presentation.Filters;
 
@@ -9,7 +10,7 @@ public class ExceptionFilter : IExceptionFilter
 {
   private static readonly Type[] _handledExceptions =
       [
-          typeof(Domain.Common.Exceptions.DomainException),
+          typeof(DomainException),
             typeof(Application.Exceptions.ApplicationException)
       ];
 

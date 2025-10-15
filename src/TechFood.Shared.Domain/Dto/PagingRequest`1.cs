@@ -1,6 +1,6 @@
 using System;
 
-namespace TechFood.Shared.Domain.Common.Dto;
+namespace TechFood.Shared.Domain.Dto;
 
 public class PagingRequest<TSort> : PagingRequest where TSort : struct, IConvertible
 {

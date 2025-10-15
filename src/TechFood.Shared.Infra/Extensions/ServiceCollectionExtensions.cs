@@ -3,7 +3,7 @@ using System.Linq;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using TechFood.Shared.Domain.Common.Interfaces;
+using TechFood.Shared.Domain.Interfaces;
 using TechFood.Shared.Domain.UoW;
 using TechFood.Shared.Infra.Extensions;
 using TechFood.Shared.Infra.Persistence.Contexts;
