@@ -19,6 +19,8 @@ public static class ServiceCollectionExtensions
     {
         options ??= new InfraOptions();
 
+        services.ConfigureOptions(options);
+
         //Context
         services.AddScoped<DbContext>();
         services.AddDbContext<DbContext>((serviceProvider, dbOptions) =>
@@ -48,8 +50,9 @@ public static class ServiceCollectionExtensions
                 mediatR.ImplementationType!,
                 mediatR.Lifetime));
 
-        //IntegrationEvent
-        services.TryAddScoped<IIntegrationEventPublisher, IntegrationEventPublisher>();
+        //EventBus
+        services.TryAddScoped<IEventBus, RabbitMqEventBus>();
+        services.AddHostedService<EventBusWorker>();
 
         return services;
     }

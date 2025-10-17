@@ -11,16 +11,18 @@ namespace TechFood.Shared.Infra.EventualConsistency
 {
     public class Mediator(
         IServiceProvider serviceProvider,
-        [FromKeyedServices(Mediator.ServiceKey)] IMediator mediator) : IMediator
+        [FromKeyedServices(Mediator.ServiceKey)] IMediator mediator,
+        IEventBus eventBus) : IMediator
     {
         public const string ServiceKey = "mediatR";
         public const string DomainEventsQueueKey = "DomainEventsQueue";
         public const string IntegrationEventsQueueKey = "IntegrationEventsQueue";
 
         private readonly IMediator _mediator = mediator;
+        private readonly IEventBus _eventBus = eventBus;
         private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-        public Task Publish(object notification, CancellationToken cancellationToken = default)
+        public async Task Publish(object notification, CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(notification);
 
@@ -60,20 +62,16 @@ namespace TechFood.Shared.Infra.EventualConsistency
             else
             {
                 // If the user is not waiting online, handle events immediately
-                if (instance is IIntegrationEvent)
+                if (instance is IIntegrationEvent integrationEvent)
                 {
-                    // Integration events should still be published to the broker
-                    // This will be handled by background services or other mechanisms
-                    // For now, we just skip internal processing
+                    await _eventBus.PublishAsync(integrationEvent, cancellationToken);
                 }
                 else
                 {
                     // Process domain events immediately
-                    _mediator.Publish(instance, cancellationToken);
+                    await _mediator.Publish(instance, cancellationToken);
                 }
             }
-
-            return Task.CompletedTask;
         }
 
         private bool IsUserWaitingOnline() => _serviceProvider.GetService<IHttpContextAccessor>()?.HttpContext is not null;

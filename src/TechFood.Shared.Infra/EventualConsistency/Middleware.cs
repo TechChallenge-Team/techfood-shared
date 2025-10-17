@@ -20,7 +20,7 @@ internal class Middleware(RequestDelegate next)
         {
             await _next(context);
 
-            var publisher = context.RequestServices.GetRequiredKeyedService<IMediator>(Mediator.ServiceKey);
+            var mediator = context.RequestServices.GetRequiredKeyedService<IMediator>(Mediator.ServiceKey);
 
             // Process domain events (internal processing with MediatR)
             if (
@@ -29,7 +29,7 @@ internal class Middleware(RequestDelegate next)
             {
                 while (eventsQueue!.TryDequeue(out var @event))
                 {
-                    await publisher.Publish(@event);
+                    await mediator.Publish(@event);
                 }
             }
 
@@ -38,7 +38,7 @@ internal class Middleware(RequestDelegate next)
 
             foreach (var domainEvent in await events.GetDomainEventsAsync())
             {
-                await publisher.Publish(domainEvent);
+                await mediator.Publish(domainEvent);
             }
 
             await transaction.CommitAsync();
@@ -48,14 +48,11 @@ internal class Middleware(RequestDelegate next)
                 context.Items.TryGetValue(Mediator.IntegrationEventsQueueKey, out var integrationValue) &&
                 integrationValue is Queue<IIntegrationEvent> integrationEventsQueue)
             {
-                var integrationEventPublisher = context.RequestServices.GetService<IIntegrationEventPublisher>();
+                var eventBus = context.RequestServices.GetRequiredService<IEventBus>();
 
-                if (integrationEventPublisher != null)
+                while (integrationEventsQueue!.TryDequeue(out var integrationEvent))
                 {
-                    while (integrationEventsQueue!.TryDequeue(out var integrationEvent))
-                    {
-                        await integrationEventPublisher.PublishAsync(integrationEvent);
-                    }
+                    await eventBus.PublishAsync(integrationEvent);
                 }
             }
         }
