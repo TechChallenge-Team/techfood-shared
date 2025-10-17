@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using TechFood.Shared.Domain.Interfaces;
+using TechFood.Shared.Application.Events;
+using TechFood.Shared.Domain.Events;
 using TechFood.Shared.Domain.UoW;
 
 namespace TechFood.Shared.Infra.EventualConsistency;
@@ -21,8 +22,9 @@ internal class Middleware(RequestDelegate next)
 
             var publisher = context.RequestServices.GetRequiredKeyedService<IMediator>(Mediator.ServiceKey);
 
+            // Process domain events (internal processing with MediatR)
             if (
-                context.Items.TryGetValue(Mediator.EventsQueueKey, out var value) &&
+                context.Items.TryGetValue(Mediator.DomainEventsQueueKey, out var value) &&
                 value is Queue<INotification> eventsQueue)
             {
                 while (eventsQueue!.TryDequeue(out var @event))
@@ -31,6 +33,7 @@ internal class Middleware(RequestDelegate next)
                 }
             }
 
+            // Get domain events from store and publish them internally
             var events = context.RequestServices.GetRequiredService<IDomainEventStore>();
 
             foreach (var domainEvent in await events.GetDomainEventsAsync())
@@ -39,6 +42,22 @@ internal class Middleware(RequestDelegate next)
             }
 
             await transaction.CommitAsync();
+
+            // Process integration events (publish to message broker)
+            if (
+                context.Items.TryGetValue(Mediator.IntegrationEventsQueueKey, out var integrationValue) &&
+                integrationValue is Queue<IIntegrationEvent> integrationEventsQueue)
+            {
+                var integrationEventPublisher = context.RequestServices.GetService<IIntegrationEventPublisher>();
+
+                if (integrationEventPublisher != null)
+                {
+                    while (integrationEventsQueue!.TryDequeue(out var integrationEvent))
+                    {
+                        await integrationEventPublisher.PublishAsync(integrationEvent);
+                    }
+                }
+            }
         }
         catch (Exception)
         {

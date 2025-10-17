@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TechFood.Shared.Domain.Interfaces;
+using TechFood.Shared.Domain.Events;
 
 namespace TechFood.Shared.Domain.Entities;
 

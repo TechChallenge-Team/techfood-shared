@@ -3,8 +3,10 @@ using System.Linq;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using TechFood.Shared.Domain.Interfaces;
+using TechFood.Shared.Application.Events;
+using TechFood.Shared.Domain.Events;
 using TechFood.Shared.Domain.UoW;
+using TechFood.Shared.Infra.Events;
 using TechFood.Shared.Infra.Extensions;
 using TechFood.Shared.Infra.Persistence.Contexts;
 using TechFood.Shared.Infra.Persistence.UoW;
@@ -45,6 +47,9 @@ public static class ServiceCollectionExtensions
                 TechFood.Shared.Infra.EventualConsistency.Mediator.ServiceKey,
                 mediatR.ImplementationType!,
                 mediatR.Lifetime));
+
+        //IntegrationEvent
+        services.TryAddScoped<IIntegrationEventPublisher, IntegrationEventPublisher>();
 
         return services;
     }
