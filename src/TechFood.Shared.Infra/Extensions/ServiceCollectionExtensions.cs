@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
     {
         options ??= new InfraOptions();
 
-        services.ConfigureOptions(options);
+        services.AddSingleton(Options.Options.Create(options));
 
         //Context
         services.AddScoped<DbContext>();
@@ -51,7 +51,7 @@ public static class ServiceCollectionExtensions
                 mediatR.Lifetime));
 
         //EventBus
-        services.TryAddScoped<IEventBus, RabbitMqEventBus>();
+        services.TryAddSingleton<IEventBus, RabbitMqEventBus>();
         services.AddHostedService<EventBusWorker>();
 
         return services;

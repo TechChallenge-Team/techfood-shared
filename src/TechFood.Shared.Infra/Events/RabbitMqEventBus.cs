@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
@@ -19,20 +20,28 @@ public class RabbitMqEventBus : IEventBus, IDisposable
     private readonly IConnection _connection;
     private readonly IModel _channel;
     private readonly IServiceProvider _serviceProvider;
-    private readonly IMediator _mediator;
 
-    private const string ExchangeName = "app_exchange";
+    private const string ExchangeName = "events.exchange";
 
     public RabbitMqEventBus(
         ILogger<RabbitMqEventBus> logger,
         IServiceProvider serviceProvider,
-        [FromKeyedServices(EventualConsistency.Mediator.ServiceKey)] IMediator mediator)
+        IConfiguration configuration)
     {
         _logger = logger;
         _serviceProvider = serviceProvider;
-        _mediator = mediator;
 
-        var factory = new ConnectionFactory() { HostName = "localhost" };
+        // get RabbitMQ connection settings from configuration if needed
+
+        var factory = new ConnectionFactory()
+        {
+            HostName = configuration.GetValue<string>("RabbitMQ:HostName") ?? "localhost",
+            UserName = configuration.GetValue<string>("RabbitMQ:UserName") ?? "guest",
+            Password = configuration.GetValue<string>("RabbitMQ:Password") ?? "guest",
+            Port = configuration.GetValue<int>("RabbitMQ:Port"),
+            DispatchConsumersAsync = true // Enable async consumers
+        };
+
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
 
@@ -44,7 +53,7 @@ public class RabbitMqEventBus : IEventBus, IDisposable
     {
         ArgumentNullException.ThrowIfNull(@event);
 
-        var routingKey = typeof(T).Name;
+        var routingKey = @event.GetType().Name;
 
         var body = JsonSerializer.SerializeToUtf8Bytes(@event);
 
