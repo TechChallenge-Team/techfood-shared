@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using TechFood.Shared.Application.Events;
 
 namespace TechFood.Shared.Infra.EventualConsistency
 {
@@ -13,7 +14,8 @@ namespace TechFood.Shared.Infra.EventualConsistency
         [FromKeyedServices(Mediator.ServiceKey)] IMediator mediator) : IMediator
     {
         public const string ServiceKey = "mediatR";
-        public const string EventsQueueKey = "EventsQueue";
+        public const string DomainEventsQueueKey = "DomainEventsQueue";
+        public const string IntegrationEventsQueueKey = "IntegrationEventsQueue";
 
         private readonly IMediator _mediator = mediator;
         private readonly IServiceProvider _serviceProvider = serviceProvider;
@@ -31,22 +33,44 @@ namespace TechFood.Shared.Infra.EventualConsistency
             {
                 var httpContextAccessor = _serviceProvider.GetRequiredService<IHttpContextAccessor>();
 
-                // fetch queue from http context or create a new queue if it doesn't exist
-                var eventsQueue = httpContextAccessor.HttpContext!.Items
-                    .TryGetValue(EventsQueueKey, out var value) && value is Queue<INotification> existingEvents
-                        ? existingEvents
-                        : new Queue<INotification>();
+                // Check if it's an integration event
+                if (instance is IIntegrationEvent integrationEvent)
+                {
+                    // Store integration events in a separate queue
+                    var integrationEventsQueue = httpContextAccessor.HttpContext!.Items
+                        .TryGetValue(IntegrationEventsQueueKey, out var value) && value is Queue<IIntegrationEvent> existingIntegrationEvents
+                            ? existingIntegrationEvents
+                            : new Queue<IIntegrationEvent>();
 
-                // add the event to the end of the queue
-                eventsQueue.Enqueue(instance);
+                    integrationEventsQueue.Enqueue(integrationEvent);
+                    httpContextAccessor.HttpContext!.Items[IntegrationEventsQueueKey] = integrationEventsQueue;
+                }
+                else
+                {
+                    // Store domain events in the regular queue (to be processed internally)
+                    var eventsQueue = httpContextAccessor.HttpContext!.Items
+                        .TryGetValue(DomainEventsQueueKey, out var value) && value is Queue<INotification> existingEvents
+                            ? existingEvents
+                            : new Queue<INotification>();
 
-                // store the queue in the http context
-                httpContextAccessor.HttpContext!.Items[EventsQueueKey] = eventsQueue;
+                    eventsQueue.Enqueue(instance);
+                    httpContextAccessor.HttpContext!.Items[DomainEventsQueueKey] = eventsQueue;
+                }
             }
             else
             {
-                // if the user is not waiting online, publish the event immediately
-                _mediator.Publish(instance, cancellationToken);
+                // If the user is not waiting online, handle events immediately
+                if (instance is IIntegrationEvent)
+                {
+                    // Integration events should still be published to the broker
+                    // This will be handled by background services or other mechanisms
+                    // For now, we just skip internal processing
+                }
+                else
+                {
+                    // Process domain events immediately
+                    _mediator.Publish(instance, cancellationToken);
+                }
             }
 
             return Task.CompletedTask;
