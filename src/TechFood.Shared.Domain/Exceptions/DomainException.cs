@@ -1,6 +1,6 @@
 using System;
 
-namespace TechFood.Shared.Domain.Common.Exceptions;
+namespace TechFood.Shared.Domain.Exceptions;
 
 public class DomainException : Exception
 {

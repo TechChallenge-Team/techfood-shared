@@ -1,4 +1,4 @@
-namespace TechFood.Shared.Domain.Common.Dto;
+namespace TechFood.Shared.Domain.Dto;
 
 public class PagingRequest
 {

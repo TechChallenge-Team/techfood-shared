@@ -5,8 +5,8 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using TechFood.Shared.Domain.Common.Entities;
-using TechFood.Shared.Domain.Common.Interfaces;
+using TechFood.Shared.Domain.Entities;
+using TechFood.Shared.Domain.Events;
 using TechFood.Shared.Domain.UoW;
 
 namespace TechFood.Shared.Infra.Persistence.Contexts;

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TechFood.Shared.Domain.Common.Interfaces;
+namespace TechFood.Shared.Domain.Repository;
 
 public interface IRepository<T> where T : class
 {
