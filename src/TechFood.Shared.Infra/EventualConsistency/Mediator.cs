@@ -64,7 +64,7 @@ namespace TechFood.Shared.Infra.EventualConsistency
                 // If the user is not waiting online, handle events immediately
                 if (instance is IIntegrationEvent integrationEvent)
                 {
-                    await _eventBus.PublishAsync(integrationEvent, cancellationToken);
+                    await _eventBus.PublishAsync(integrationEvent, null, cancellationToken);
                 }
                 else
                 {

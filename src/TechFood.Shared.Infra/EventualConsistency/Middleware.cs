@@ -59,7 +59,7 @@ internal class Middleware(
                 {
                     try
                     {
-                        await eventBus.PublishAsync(integrationEvent);
+                        await eventBus.PublishAsync(integrationEvent, null);
                     }
                     catch (Exception ex)
                     {

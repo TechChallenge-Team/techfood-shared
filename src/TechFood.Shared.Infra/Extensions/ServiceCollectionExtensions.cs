@@ -51,8 +51,10 @@ public static class ServiceCollectionExtensions
                 mediatR.Lifetime));
 
         //EventBus
-        services.TryAddScoped<IEventBus, RabbitMqEventBus>();
-        services.AddHostedService<EventBusWorker>();
+        //services.TryAddScoped<IEventBus, RabbitMqEventBus>();
+        //services.AddHostedService<EventBusWorker>();
+
+        services.TryAddScoped<IEventBus, CapEventBus>();
 
         return services;
     }

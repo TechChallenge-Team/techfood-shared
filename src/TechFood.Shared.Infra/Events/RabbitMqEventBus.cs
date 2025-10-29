@@ -112,4 +112,9 @@ public class RabbitMqEventBus : IEventBus, IDisposable
         _channel?.Dispose();
         _connection?.Dispose();
     }
+
+    public Task PublishAsync<T>(T eventMessage, string? callbackName = null, CancellationToken cancellationToken = default) where T : IIntegrationEvent
+    {
+        throw new NotImplementedException();
+    }
 }
