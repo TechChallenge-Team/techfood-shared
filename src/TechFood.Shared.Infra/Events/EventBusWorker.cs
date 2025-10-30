@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -14,15 +15,15 @@ namespace TechFood.Shared.Infra.Events
     internal class EventBusWorker : BackgroundService
     {
         private readonly InfraOptions _infraOptions;
-        private readonly IEventBus _eventBus;
+        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<EventBusWorker> _logger;
 
         public EventBusWorker(
-            IEventBus eventBus,
+            IServiceProvider serviceProvider,
             IOptions<InfraOptions> infraOptions,
             ILogger<EventBusWorker> logger)
         {
-            _eventBus = eventBus;
+            _serviceProvider = serviceProvider;
             _infraOptions = infraOptions.Value;
             _logger = logger;
         }
@@ -47,7 +48,9 @@ namespace TechFood.Shared.Infra.Events
 
                 _logger.LogInformation("Subscribing integration event {EventType} with handler {HandlerType}", eventType.Name, handlerType.Name);
 
-                method.Invoke(_eventBus, null);
+                var eventBus = _serviceProvider.GetRequiredService<IEventBus>();
+
+                method.Invoke(eventBus, null);
             }
 
             return Task.CompletedTask;
