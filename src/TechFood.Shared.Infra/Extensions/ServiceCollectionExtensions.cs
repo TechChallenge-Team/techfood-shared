@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
     {
         options ??= new InfraOptions();
 
-        services.ConfigureOptions(options);
+        services.AddSingleton(Options.Options.Create(options));
 
         //Context
         services.AddScoped<DbContext>();
