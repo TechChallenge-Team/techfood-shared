@@ -7,7 +7,7 @@ namespace TechFood.Shared.Domain.Entities;
 
 public class Entity
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid Id { get; protected set; } = Guid.NewGuid();
 
     public bool IsDeleted { get; set; }
 
