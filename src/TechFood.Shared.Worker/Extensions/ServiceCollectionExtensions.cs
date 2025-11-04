@@ -4,7 +4,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWorker<DbContext>(this IServiceCollection services)
+    public static IServiceCollection AddWorker(this IServiceCollection services)
     {
         //EventBus
         services.AddHostedService<EventBusWorker>();
