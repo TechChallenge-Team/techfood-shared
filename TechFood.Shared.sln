@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechFood.Shared.Infra", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechFood.Shared.Presentation", "src\TechFood.Shared.Presentation\TechFood.Shared.Presentation.csproj", "{52A79443-740B-137A-8807-B680D8ED34D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechFood.Shared.Worker", "src\TechFood.Shared.Worker\TechFood.Shared.Worker.csproj", "{073231CE-2F36-7FF8-96A3-CF6158590753}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{52A79443-740B-137A-8807-B680D8ED34D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52A79443-740B-137A-8807-B680D8ED34D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52A79443-740B-137A-8807-B680D8ED34D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{073231CE-2F36-7FF8-96A3-CF6158590753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{073231CE-2F36-7FF8-96A3-CF6158590753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{073231CE-2F36-7FF8-96A3-CF6158590753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{073231CE-2F36-7FF8-96A3-CF6158590753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{74D4E2EE-7C4B-ECF9-F4E8-56C89C0BBCA3} = {2999BE8A-2C03-4997-957A-66142629BCD5}
 		{496A6521-7FD4-4333-69AF-8F382AF915A3} = {2999BE8A-2C03-4997-957A-66142629BCD5}
 		{52A79443-740B-137A-8807-B680D8ED34D8} = {2999BE8A-2C03-4997-957A-66142629BCD5}
+		{073231CE-2F36-7FF8-96A3-CF6158590753} = {2999BE8A-2C03-4997-957A-66142629BCD5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {08492C5F-0B0F-4434-9AAF-5ED0298B15BF}

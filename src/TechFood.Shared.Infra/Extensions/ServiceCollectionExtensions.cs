@@ -52,7 +52,6 @@ public static class ServiceCollectionExtensions
 
         //EventBus
         services.TryAddSingleton<IEventBus, RabbitMqEventBus>();
-        services.AddHostedService<EventBusWorker>();
 
         return services;
     }

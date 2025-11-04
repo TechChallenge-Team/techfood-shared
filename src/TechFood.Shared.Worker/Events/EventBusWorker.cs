@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 using TechFood.Shared.Application.Events;
 using TechFood.Shared.Infra.Extensions;
 
-namespace TechFood.Shared.Infra.Events
+namespace TechFood.Shared.Worker.Events
 {
     internal class EventBusWorker : BackgroundService
     {
