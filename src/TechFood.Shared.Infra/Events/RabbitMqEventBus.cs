@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -57,8 +56,8 @@ public class RabbitMqEventBus : IEventBus, IDisposable
 
         var routingKey = @event.GetType().Name;
 
-        var bodyString = JsonSerializer.Serialize(@event);
-        var body = Encoding.UTF8.GetBytes(bodyString);
+        // Serialize using the concrete type to include all derived properties
+        var body = JsonSerializer.SerializeToUtf8Bytes(@event, @event.GetType());
 
         var properties = _channel.CreateBasicProperties();
         properties.Persistent = true; // Make messages persistent
@@ -91,7 +90,6 @@ public class RabbitMqEventBus : IEventBus, IDisposable
             
             try
             {
-                var stringBody = Encoding.UTF8.GetString(body);
                 var message = JsonSerializer.Deserialize<T>(body);
 
                 // Create a new scope for each message to ensure proper DI lifetime management
