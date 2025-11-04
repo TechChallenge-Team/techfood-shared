@@ -22,7 +22,7 @@ public class RabbitMqEventBus : IEventBus, IDisposable
     private readonly IModel _channel;
     private readonly IServiceProvider _serviceProvider;
 
-    private const string ExchangeName = "events.exchange";
+    private const string ExchangeName = "techfood.events.exchange";
 
     public RabbitMqEventBus(
         ILogger<RabbitMqEventBus> logger,
