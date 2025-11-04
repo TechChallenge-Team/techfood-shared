@@ -38,7 +38,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IDomainEventStore>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
 
         //MediatR
-        services.AddMediatR(options.AssemblyLoad);
+        services.AddMediatR(options.ApplicationAssembly);
 
         var mediatR = services.First(s => s.ServiceType == typeof(IMediator));
 

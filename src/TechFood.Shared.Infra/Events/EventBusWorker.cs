@@ -30,7 +30,7 @@ namespace TechFood.Shared.Infra.Events
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var handlers = _infraOptions.AssemblyLoad?.GetTypes()
+            var handlers = _infraOptions.ApplicationAssembly?.GetTypes()
                     .Where(t => t.GetInterfaces().Any(i =>
                                 i.IsGenericType &&
                                 i.GetGenericTypeDefinition() == typeof(INotificationHandler<>) &&

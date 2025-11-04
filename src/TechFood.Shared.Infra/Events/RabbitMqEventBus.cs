@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -75,7 +76,8 @@ public class RabbitMqEventBus : IEventBus, IDisposable
          where T : IIntegrationEvent
          where TH : INotificationHandler<T>
     {
-        var queueName = $"{typeof(T).Name}_queue";
+        var serviceName = Assembly.GetEntryAssembly()!.GetName().Name;
+        var queueName = $"{serviceName}_{typeof(T).Name}_queue";
 
         _channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false);
         _channel.QueueBind(queue: queueName, exchange: ExchangeName, routingKey: typeof(T).Name);
