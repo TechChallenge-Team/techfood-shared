@@ -11,15 +11,13 @@ namespace TechFood.Shared.Infra.EventualConsistency
 {
     public class Mediator(
         IServiceProvider serviceProvider,
-        [FromKeyedServices(Mediator.ServiceKey)] IMediator mediator,
-        IEventBus eventBus) : IMediator
+        [FromKeyedServices(Mediator.ServiceKey)] IMediator mediator) : IMediator
     {
         public const string ServiceKey = "mediatR";
         public const string DomainEventsQueueKey = "DomainEventsQueue";
         public const string IntegrationEventsQueueKey = "IntegrationEventsQueue";
 
         private readonly IMediator _mediator = mediator;
-        private readonly IEventBus _eventBus = eventBus;
         private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public async Task Publish(object notification, CancellationToken cancellationToken = default)
@@ -64,7 +62,8 @@ namespace TechFood.Shared.Infra.EventualConsistency
                 // If the user is not waiting online, handle events immediately
                 if (instance is IIntegrationEvent integrationEvent)
                 {
-                    await _eventBus.PublishAsync(integrationEvent, cancellationToken);
+                    var eventBus = _serviceProvider.GetRequiredService<IEventBus>();
+                    await eventBus.PublishAsync(integrationEvent, cancellationToken);
                 }
                 else
                 {
