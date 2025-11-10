@@ -36,10 +36,10 @@ public class RabbitMqEventBus : IEventBus, IDisposable
 
         var factory = new ConnectionFactory()
         {
-            HostName = configuration.GetValue<string>("RabbitMQ:HostName") ?? "localhost",
-            UserName = configuration.GetValue<string>("RabbitMQ:UserName") ?? "guest",
-            Password = configuration.GetValue<string>("RabbitMQ:Password") ?? "guest",
-            Port = configuration.GetValue<int>("RabbitMQ:Port"),
+            HostName = configuration.GetValue<string>("EventBus:RabbitMQ:HostName") ?? "localhost",
+            UserName = configuration.GetValue<string>("EventBus:RabbitMQ:UserName") ?? "guest",
+            Password = configuration.GetValue<string>("EventBus:RabbitMQ:Password") ?? "guest",
+            Port = configuration.GetValue<int>("EventBus:RabbitMQ:Port"),
             DispatchConsumersAsync = true // Enable async consumers
         };
 

@@ -8,6 +8,7 @@ using TechFood.Shared.Domain.Events;
 using TechFood.Shared.Domain.UoW;
 using TechFood.Shared.Infra.Events;
 using TechFood.Shared.Infra.Extensions;
+using TechFood.Shared.Infra.Http;
 using TechFood.Shared.Infra.Persistence.Contexts;
 using TechFood.Shared.Infra.Persistence.UoW;
 
@@ -52,6 +53,17 @@ public static class ServiceCollectionExtensions
 
         //EventBus
         services.TryAddSingleton<IEventBus, RabbitMqEventBus>();
+
+        //ServiceUrlProvider
+        services.AddSingleton<IServiceUrlProvider, ServiceUrlProvider>();
+
+        //TokenService
+        services.AddMemoryCache();
+        services.AddHttpClient<ITokenService, TokenService>((services, client) =>
+        {
+            var serviceUrlProvider = services.GetRequiredService<IServiceUrlProvider>();
+            client.BaseAddress = serviceUrlProvider.GetServiceUri("Authentication");
+        });
 
         return services;
     }
