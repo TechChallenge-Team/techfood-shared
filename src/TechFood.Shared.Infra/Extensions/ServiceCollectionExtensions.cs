@@ -20,10 +20,10 @@ public static class ServiceCollectionExtensions
     {
         options ??= new InfraOptions();
 
-        services.AddSingleton(Options.Options.Create(options));
+        services.TryAddSingleton(Options.Options.Create(options));
 
         //Context
-        services.AddScoped<DbContext>();
+        services.TryAddScoped<DbContext>();
         services.AddDbContext<DbContext>((serviceProvider, dbOptions) =>
         {
             var config = serviceProvider.GetRequiredService<IConfiguration>();
@@ -32,11 +32,11 @@ public static class ServiceCollectionExtensions
         });
 
         //UoW
-        services.AddScoped<IUnitOfWorkTransaction, UnitOfWorkTransaction>();
-        services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
+        services.TryAddScoped<IUnitOfWorkTransaction, UnitOfWorkTransaction>();
+        services.TryAddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
 
         //DomainEvents
-        services.AddScoped<IDomainEventStore>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
+        services.TryAddScoped<IDomainEventStore>(serviceProvider => serviceProvider.GetRequiredService<DbContext>());
 
         //MediatR
         services.AddMediatR(options.ApplicationAssembly);
@@ -55,7 +55,7 @@ public static class ServiceCollectionExtensions
         services.TryAddSingleton<IEventBus, RabbitMqEventBus>();
 
         //ServiceUrlProvider
-        services.AddSingleton<IServiceUrlProvider, ServiceUrlProvider>();
+        services.TryAddSingleton<IServiceUrlProvider, ServiceUrlProvider>();
 
         //TokenService
         services.AddMemoryCache();

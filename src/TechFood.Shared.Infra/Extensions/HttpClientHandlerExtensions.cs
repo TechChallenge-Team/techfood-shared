@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using TechFood.Shared.Infra.Http;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -8,6 +9,8 @@ namespace Microsoft.Extensions.DependencyInjection
             where TClient : class
             where TImplementation : class, TClient
         {
+            services.TryAddTransient<AuthenticatedHttpClientHandler>();
+
             return services.AddHttpClient<TClient, TImplementation>(
                 serviceName,
                 (serviceProvider, client) =>
