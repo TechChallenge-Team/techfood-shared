@@ -34,12 +34,12 @@ namespace TechFood.Shared.Infra.Http
 
             var data = new
             {
-                client_id = _config["Authentication:ClientId"],
-                client_secret = _config["Authentication:ClientSecret"],
-                grant_type = "client_credentials"
+                clientId = _config["Authentication:ClientId"],
+                clientSecret = _config["Authentication:ClientSecret"],
+                grantType = "client_credentials"
             };
 
-            var response = await _httpClient.PostAsJsonAsync("token", data, cancellationToken);
+            var response = await _httpClient.PostAsJsonAsync("v1/token", data, cancellationToken);
 
             response.EnsureSuccessStatusCode();
 
