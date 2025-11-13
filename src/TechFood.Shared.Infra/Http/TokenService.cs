@@ -43,10 +43,10 @@ namespace TechFood.Shared.Infra.Http
 
             response.EnsureSuccessStatusCode();
 
-            var result = await response.Content.ReadFromJsonAsync<TokenResponse>(cancellationToken: cancellationToken);
+            var result = await response.Content.ReadFromJsonAsync<TokenResponse>(cancellationToken);
             var expiration = result?.ExpiresIn ?? DefaultTokenExpirationSeconds;
 
-            token = result?.AccessToken ?? throw new Exception("Token inválido da API Auth");
+            token = result?.AccessToken ?? throw new Exception("The token response is missing the access token.");
 
             _cache.Set(
                 CacheKey,
