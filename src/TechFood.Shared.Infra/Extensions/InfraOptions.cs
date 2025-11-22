@@ -8,5 +8,7 @@ public class InfraOptions
 {
     public Action<IServiceProvider, DbContextOptionsBuilder>? DbContext { get; set; }
 
+    public Assembly? InfraAssembly { get; set; }
+
     public Assembly? ApplicationAssembly { get; set; }
 }

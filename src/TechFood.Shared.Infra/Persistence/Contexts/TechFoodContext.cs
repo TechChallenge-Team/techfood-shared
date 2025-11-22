@@ -5,13 +5,18 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using TechFood.Shared.Domain.Entities;
 using TechFood.Shared.Domain.Events;
 using TechFood.Shared.Domain.UoW;
+using TechFood.Shared.Infra.Extensions;
 
 namespace TechFood.Shared.Infra.Persistence.Contexts;
 
-public abstract class TechFoodContext(DbContextOptions options) : DbContext(options), IUnitOfWork, IDomainEventStore
+public abstract class TechFoodContext(
+    IOptions<InfraOptions> infraOptions,
+    DbContextOptions options
+        ) : DbContext(options), IUnitOfWork, IDomainEventStore
 {
     public Task<IEnumerable<IDomainEvent>> GetDomainEventsAsync()
     {
@@ -49,7 +54,10 @@ public abstract class TechFoodContext(DbContextOptions options) : DbContext(opti
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TechFoodContext).Assembly);
+        if (infraOptions.Value.InfraAssembly != null)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(infraOptions.Value.InfraAssembly);
+        }
 
         var properties = modelBuilder.Model
             .GetEntityTypes()
