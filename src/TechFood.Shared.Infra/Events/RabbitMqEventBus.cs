@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using TechFood.Shared.Application.Events;
+using TechFood.Shared.Domain.UoW;
 
 namespace TechFood.Shared.Infra.Events;
 
@@ -87,7 +88,7 @@ public class RabbitMqEventBus : IEventBus, IDisposable
         consumer.Received += async (model, ea) =>
         {
             var body = ea.Body.ToArray();
-            
+
             try
             {
                 var message = JsonSerializer.Deserialize<T>(body);
@@ -95,19 +96,24 @@ public class RabbitMqEventBus : IEventBus, IDisposable
                 // Create a new scope for each message to ensure proper DI lifetime management
                 using var scope = _serviceProvider.CreateScope();
                 var scopedMediator = scope.ServiceProvider.GetRequiredKeyedService<IMediator>(EventualConsistency.Mediator.ServiceKey);
-                
+
                 // Process the message
                 await scopedMediator.Publish(message!, CancellationToken.None);
 
+                var transaction = scope.ServiceProvider.GetRequiredService<IUnitOfWorkTransaction>();
+
+                // Commit the transaction if everything is successful
+                await transaction.CommitAsync();
+
                 // Manually acknowledge the message only after successful processing
                 _channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
-                
+
                 _logger.LogInformation("Processed integration event from RabbitMQ: {EventType}", typeof(T).Name);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error processing integration event {EventType}. Message will be requeued.", typeof(T).Name);
-                
+
                 // Reject and requeue the message for retry
                 _channel.BasicNack(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true);
             }
@@ -115,7 +121,7 @@ public class RabbitMqEventBus : IEventBus, IDisposable
 
         // Set autoAck to false to manually control acknowledgment
         _channel.BasicConsume(queue: queueName, autoAck: false, consumer: consumer);
-        
+
         _logger.LogInformation("Subscribed to RabbitMQ queue {QueueName} for event {EventType}", queueName, typeof(T).Name);
     }
 
