@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using TechFood.Shared.Application.Events;
@@ -9,6 +10,7 @@ using TechFood.Shared.Domain.UoW;
 using TechFood.Shared.Infra.Events;
 using TechFood.Shared.Infra.Extensions;
 using TechFood.Shared.Infra.Http;
+using TechFood.Shared.Infra.Persistence.Behaviors;
 using TechFood.Shared.Infra.Persistence.Contexts;
 using TechFood.Shared.Infra.Persistence.UoW;
 
@@ -50,6 +52,10 @@ public static class ServiceCollectionExtensions
                 TechFood.Shared.Infra.EventualConsistency.Mediator.ServiceKey,
                 mediatR.ImplementationType!,
                 mediatR.Lifetime));
+
+        // Register SaveChanges handler for all notifications (runs LAST to commit changes)
+        // Uses IUnitOfWork abstraction - already registered above as DbContext
+        services.AddScoped(typeof(INotificationHandler<>), typeof(SaveChangesNotificationHandler<>));
 
         //EventBus
         services.TryAddSingleton<IEventBus, RabbitMqEventBus>();
